@@ -50,7 +50,7 @@ class InfiniteStudentSensor(SensorEntity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        self._attr_native_value = await self._hub.poll_data("student")
+        self._attr_native_value = 23 #await self._hub.poll_data("student")
 
 class InfiniteCourseSensor(SensorEntity):
     def __init__(
