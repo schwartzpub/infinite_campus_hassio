@@ -1,0 +1,11 @@
+- platform: infinitecampus
+  name: "Infinite Campus Students"
+  value_template: '{{ infinite_json["households"][0]["householdPersonEntities"] | selectattr("portalGuardianType","equalto","guardian") | list }}'
+
+- platform: infinitecampus
+  name: "Infinite Campus Classes"
+  value_template: '{{ infinite_json["households"][0]["householdPersonEntities"] | selectattr("portalGuardianType","equalto","guardian") | list }}'
+
+- platform: infinitecampus
+  name: "Infinite Campus Assignments"
+  value_template: '{{ infinite_json["households"][0]["householdPersonEntities"] | selectattr("portalGuardianType","equalto","guardian") | list }}'
