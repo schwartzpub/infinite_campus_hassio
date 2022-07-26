@@ -7,15 +7,22 @@ from homeassistant.core import HomeAssistant
 
 import logging
 from .infinitehub import InfiniteHub
-from .const import DOMAIN
+from .const import (
+    CONF_BASEURI,
+    CONF_DISTRICT,
+    CONF_SECRET,
+    CONF_USERNAME,
+    PLATFORMS,
+    DOMAIN
+)
 
 _LOGGER = logging.getLogger(__name__)
-PLATFORMS: list[Platform] = [Platform.SENSOR]
-
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up infinitecampus from a config entry."""
-    hass.data.setdefault(DOMAIN,{})[entry.entry_id] = InfiniteHub(hass, entry.data["district"], entry.data["baseuri"], entry.data["username"], entry.data["password"])
+    hass.data.setdefault(DOMAIN,{})[entry.entry_id] = InfiniteHub(
+        hass
+    )
 
     hass.config_entries.async_setup_platforms(entry, PLATFORMS)
 
