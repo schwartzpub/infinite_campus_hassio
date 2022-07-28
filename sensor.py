@@ -27,7 +27,7 @@ SCAN_INTERVAL = SCAN_INTERVAL
 async def async_setup_entry(hass,config_entry: ConfigEntry,async_add_entities: AddEntitiesCallback):
     """Set up the sensor platform."""
     hub = hass.data[DOMAIN]
-
+    _LOGGER.info("-------SETTING UP PLATFORMS--------")
     async_add_entities(
         [InfiniteStudentSensor(hass,hub),InfiniteCourseSensor(hass,hub),InfiniteAssignmentSensor(hass,hub)]
     )
