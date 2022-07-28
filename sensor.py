@@ -24,6 +24,10 @@ _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = SCAN_INTERVAL
 
+async def async_setup_platform(hass, config_entry, add_entities, discovery_info=None):
+    return True
+    
+
 async def async_setup_entry(hass,config_entry: ConfigEntry,async_add_entities: AddEntitiesCallback):
     """Set up the sensor platform."""
     hub = hass.data[DOMAIN]
