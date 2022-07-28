@@ -45,17 +45,9 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                 return True
             else:
                 return False
-        
-        
-    async def poll_data(self,type) -> str:
-        if type == "student":
-            return await self.poll_students()
-        elif type == "course":
-            return await self.poll_courses()
-        elif type == "assignment":
-            return await self.poll_assignments()
 
     async def poll_students(self) -> str:
+        """Get Students Data"""
         students = []
         async with aiohttp.ClientSession() as session:
             authenticated = await self.authenticate(session)
@@ -81,7 +73,6 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                             return term["termID"]
 
                     return False
-
 
     async def poll_courses(self) -> str:
         term = await self.poll_term()
