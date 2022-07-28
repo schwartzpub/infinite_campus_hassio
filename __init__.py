@@ -29,7 +29,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN,{})
     hass.data[DOMAIN][entry.entry_id] = InfiniteHub(hass)
     _LOGGER.warning("-------SETTING UP PLATFORMS--------")
-    result = await hass.config_entries.async_setup_platforms(entry, HA_SENSOR)
+    result = hass.config_entries.async_setup_platforms(entry, HA_SENSOR)
     _LOGGER.warning("-------COMPLETED SETTING UP PLATFORMS:" + result + "---------")
     return True
 
