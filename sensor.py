@@ -10,6 +10,7 @@ from homeassistant.components.sensor import (
 )
 
 from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
@@ -23,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 SCAN_INTERVAL = SCAN_INTERVAL
 
-async def async_setup_entry(hass,config_entry,async_add_entities):
+async def async_setup_entry(hass,config_entry: ConfigEntry,async_add_entities: AddEntitiesCallback):
     """Set up the sensor platform."""
     hub = hass.data[DOMAIN]
 
