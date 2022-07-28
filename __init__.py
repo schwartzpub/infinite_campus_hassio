@@ -28,13 +28,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data[DOMAIN][entry.entry_id] = InfiniteHub(hass)
 
     _LOGGER.warning("-------SETTING UP PLATFORMS--------")
-
-    for component in HA_SENSOR:
-        _LOGGER.warning("ADDING COMPONENT:" + component)
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(entry, component)
-        )
     
+    hass.config_entries.async_setup_platforms(entry, HA_SENSOR)
+        
     _LOGGER.warning("-------COMPLETED SETTING UP PLATFORMS---------")
     return True
 
