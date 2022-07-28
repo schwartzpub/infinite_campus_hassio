@@ -20,10 +20,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up infinitecampus from a config entry."""
-    hass.data.setdefault(DOMAIN,{})[entry.entry_id] = InfiniteHub(
-        hass
-    )
-
+    #hass.data.setdefault(DOMAIN,{})[entry.entry_id] = InfiniteHub(
+    #    hass
+    #)
+    hass.data.setdefault(DOMAIN,{})
+    hass.data[DOMAIN] = InfiniteHub(hass)
     hass.config_entries.async_setup_platforms(entry, HA_SENSOR)
 
     return True
