@@ -1,7 +1,6 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 from datetime import timedelta
-from homeassistant.components import infinitecampus
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -36,7 +35,7 @@ class InfiniteStudentSensor(SensorEntity):
     def __init__(
         self,
         hass: HomeAssistant,
-        hub: infinitecampus.InfiniteHub
+        hub
     ) -> None:
         self._attr_name = "Infinite Campus Students"
         self._attr_native_unit_of_measurement = None
