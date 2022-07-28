@@ -18,6 +18,9 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+def setup (hass, config):
+    return True
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up infinitecampus from a config entry."""
     #hass.data.setdefault(DOMAIN,{})[entry.entry_id] = InfiniteHub(
