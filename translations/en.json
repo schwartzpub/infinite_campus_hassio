@@ -11,7 +11,7 @@
         "step": {
             "user": {
                 "data": {
-                    "baseuri": "Base URI (https://districtsubdomain.infinitecampus.com)",
+                    "baseuri": "Base URI",
                     "district": "District",
                     "password": "Password",
                     "username": "Username"

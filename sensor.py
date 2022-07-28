@@ -25,6 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = SCAN_INTERVAL
 
 async def async_setup_platform(hass, config_entry, add_entities, discovery_info=None):
+    _LOGGER.warning("-------ASYNC_SETUP_PLATFORM_CUSTOM--------")
     return True
 
 
