@@ -6,7 +6,7 @@ NAME = "Infinite Campus"
 DOMAIN = "infinitecampus"
 VERSION = "0.0.1"
 
-HA_SENSOR = "sensor"
+HA_SENSOR = ["sensor"]
 
 SCAN_INTERVAL = timedelta(minutes=1)
 
