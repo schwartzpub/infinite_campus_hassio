@@ -4,7 +4,6 @@ from datetime import timedelta
 from homeassistant.components import infinitecampus
 
 from homeassistant.components.sensor import (
-    SCAN_INTERVAL,
     SensorDeviceClass,
     SensorEntity,
     SensorStateClass,
@@ -29,9 +28,7 @@ async def async_setup_entry(hass,config_entry,async_add_entities):
     hub = hass.data[DOMAIN][config_entry.entry_id]
 
     async_add_entities(
-        [InfiniteStudentSensor(hass,hub)],
-        [InfiniteCourseSensor(hass,hub)],
-        [InfiniteAssignmentSensor(hass,hub)]
+        [InfiniteStudentSensor(hass,hub),InfiniteCourseSensor(hass,hub),InfiniteAssignmentSensor(hass,hub)]
     )
 
 class InfiniteStudentSensor(SensorEntity):
@@ -40,7 +37,7 @@ class InfiniteStudentSensor(SensorEntity):
         hass: HomeAssistant,
         hub: infinitecampus.InfiniteHub
     ) -> None:
-        self._attr_name = "Infinite Campus Student"
+        self._attr_name = "Infinite Campus Students"
         self._attr_native_unit_of_measurement = None
         self._attr_device_class = None
         self._attr_state_class = None
@@ -59,11 +56,7 @@ class InfiniteStudentSensor(SensorEntity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-<<<<<<< HEAD
-        self._attr_json = await self._hub.poll_data("student")
-=======
-        self._attr_native_value = 23 #await self._hub.poll_data("student")
->>>>>>> 9be3ffbd005ad03fea2a8f16cd04919f9d190ee6
+        self._attr_json = await self._hub.poll_students()
 
 class InfiniteCourseSensor(SensorEntity):
     def __init__(
@@ -71,7 +64,7 @@ class InfiniteCourseSensor(SensorEntity):
         hass: HomeAssistant,
         hub: infinitecampus.InfiniteHub
     ) -> None:
-        self._attr_name = "Infinite Campus Course"
+        self._attr_name = "Infinite Campus Courses"
         self._attr_native_unit_of_measurement = None
         self._attr_device_class = None
         self._attr_state_class = None
@@ -80,11 +73,17 @@ class InfiniteCourseSensor(SensorEntity):
         self._hass = hass
         self._attr_json = "test"
 
+    @property
+    def extra_state_attributes(self):
+        return {
+            "json": self._attr_json
+        }
+
     async def async_update(self) -> None:
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        self._attr_json = await self._hub.poll_data("course")
+        self._attr_json = await self._hub.poll_courses()
 
 class InfiniteAssignmentSensor(SensorEntity):
     def __init__(
@@ -92,7 +91,7 @@ class InfiniteAssignmentSensor(SensorEntity):
         hass: HomeAssistant,
         hub: infinitecampus.InfiniteHub
     ) -> None:
-        self._attr_name = "Infinite Campus Assignment"
+        self._attr_name = "Infinite Campus Assignments"
         self._attr_native_unit_of_measurement = None
         self._attr_device_class = None
         self._attr_state_class = None
@@ -101,8 +100,14 @@ class InfiniteAssignmentSensor(SensorEntity):
         self._hass = hass
         self._attr_json = "test"
 
+    @property
+    def extra_state_attributes(self):
+        return {
+            "json": self._attr_json
+        }
+
     async def async_update(self) -> None:
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        self._attr_json = await self._hub.poll_data("assignment")
+        self._attr_json = await self._hub.poll_assignments()
