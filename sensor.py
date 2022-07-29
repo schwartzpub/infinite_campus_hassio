@@ -62,7 +62,7 @@ class InfiniteCourseSensor(SensorEntity):
     def __init__(
         self,
         hass: HomeAssistant,
-        hub: infinitecampus.InfiniteHub
+        hub
     ) -> None:
         self._attr_name = "Infinite Campus Courses"
         self._attr_native_unit_of_measurement = None
@@ -89,7 +89,7 @@ class InfiniteAssignmentSensor(SensorEntity):
     def __init__(
         self,
         hass: HomeAssistant,
-        hub: infinitecampus.InfiniteHub
+        hub
     ) -> None:
         self._attr_name = "Infinite Campus Assignments"
         self._attr_native_unit_of_measurement = None

@@ -88,6 +88,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                             for section in courseresponse:
                                 for placement in section["sectionPlacements"]:
                                     if placement["termID"] == term:
+                                        placement["personID"] = student["personID"]
                                         courses.append(placement)
                 return courses
 
