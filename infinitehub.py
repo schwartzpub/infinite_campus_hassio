@@ -56,6 +56,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                 async with session.get('{0}/campus/api/portal/students'.format(self._baseuri)) as studentresp:
                     studentresponse = await studentresp.json()
                     for student in studentresponse:
+                        student["scheduleDays"] = self.poll_scheduleDays(student["enrollments"][0]["calendarID"]) if len(student["enrollments"]) > 0 else ""
                         students.append(student)
                     return students
             else:
@@ -74,6 +75,14 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                             return term["termID"]
 
                     return False
+
+    async def poll_scheduleDays(self,calendarID) -> str:
+        async with aiohttp.ClientSession() as session:
+            authenticated = await self.authenticate(session)
+            if authenticated:
+                async with session.get('{0}/campus/resources/calendar/instructionalDay?calendarID={1}'.format(self._baseuri,calendarID)) as dayresp:
+                    daysresponse = await dayresp.json()
+        return daysresponse
 
     async def poll_courses(self) -> str:
         term = await self.poll_term()
