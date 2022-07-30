@@ -56,7 +56,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                 async with session.get('{0}/campus/api/portal/students'.format(self._baseuri)) as studentresp:
                     studentresponse = await studentresp.json()
                     for student in studentresponse:
-                        student["scheduleDays"] = self.poll_scheduleDays(student["enrollments"][0]["calendarID"]) if len(student["enrollments"]) > 0 else ""
+                        student["scheduleDays"] = await self.poll_scheduleDays(student["enrollments"][0]["calendarID"]) if len(student["enrollments"]) > 0 else ""
                         students.append(student)
                     return students
             else:
