@@ -4,6 +4,7 @@ import logging
 import aiohttp
 
 from typing import Any, Dict
+from datetime import datetime
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -106,6 +107,8 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                         async with session.get('{0}/campus/api/portal/assignment/listView?&personID={1}'.format(self._baseuri,str(student["personID"])),headers={'Accept': 'application/json'}) as assignmentresp:
                             assignmentresponse = await assignmentresp.json()
                             for assignment in assignmentresponse:
+                                if (assignment["dueDate"]):
+                                    assignment["dueDate"] = datetime.strptime(assignment["dueDate"], "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%Y-%m-%d (%H:%M:%S)")
                                 if term in assignment["termIDs"]:
                                     assignments.append(assignment)
                 return assignments
