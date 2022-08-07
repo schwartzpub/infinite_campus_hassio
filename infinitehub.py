@@ -4,7 +4,7 @@ import logging
 import aiohttp
 
 from typing import Any, Dict
-from datetime import datetime
+from datetime import datetime, date
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -68,7 +68,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
             if authenticated:
                 async with session.get('{0}/campus/resources/term?structureID=1002'.format(self._baseuri),headers={'Accept': 'application/json'}) as termresp:
                     terms = await termresp.json()
-                    today = "2022-05-30" #date.today().strftime("%Y-%m-%d")
+                    today = date.today().strftime("%Y-%m-%d")
 
                     for term in terms:
                         if term["startDate"] < today and term["endDate"] > today:
