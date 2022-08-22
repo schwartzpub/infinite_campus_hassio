@@ -24,7 +24,6 @@ SCAN_INTERVAL = SCAN_INTERVAL
 
 async def async_setup_entry(hass,config_entry,async_add_entities):
     """Set up the sensor platform."""
-    _LOGGER.warning("Does this ever happen?")
     hub = hass.data[DOMAIN][config_entry.entry_id]
 
     async_add_entities(
