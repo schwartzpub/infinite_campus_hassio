@@ -66,7 +66,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
         async with aiohttp.ClientSession() as session:
             authenticated = await self.authenticate(session)
             if authenticated:
-                async with session.get('{0}/campus/resources/term?structureID=1002'.format(self._baseuri),headers={'Accept': 'application/json'}) as termresp:
+                async with session.get('{0}/campus/resources/term?structureID=1063'.format(self._baseuri),headers={'Accept': 'application/json'}) as termresp:
                     terms = await termresp.json()
                     today = date.today().strftime("%Y-%m-%d")
 
