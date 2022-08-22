@@ -71,7 +71,9 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                     today = date.today().strftime("%Y-%m-%d")
 
                     for term in terms:
+                        _LOGGER.warning(term)
                         if term["startDate"] <= today and term["endDate"] >= today:
+                            
                             return term["termID"]
 
                     return False
