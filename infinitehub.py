@@ -16,7 +16,7 @@ from .const import (
     CONF_DISTRICT,
     CONF_SECRET,
     DOMAIN,
-    SCAN_INTERVAL
+    SCAN_INT
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ class InfiniteHub(DataUpdateCoordinator[dict[str, Any]]):
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=SCAN_INTERVAL,
+            update_interval=SCAN_INT,
         )
 
         self._baseuri = self.config_entry.data[CONF_BASEURI]

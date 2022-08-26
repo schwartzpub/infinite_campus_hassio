@@ -49,8 +49,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
                     }
                 if response.status != 200:
                     raise CannotConnect
-                else:
-                    raise InvalidAuth
+                raise InvalidAuth
 
 @config_entries.HANDLERS.register(DOMAIN)
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
