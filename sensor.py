@@ -1,26 +1,21 @@
 """Platform for sensor integration."""
 from __future__ import annotations
-from datetime import timedelta
 
 from homeassistant.components.sensor import (
-    SensorDeviceClass,
-    SensorEntity,
-    SensorStateClass,
+    SensorEntity
 )
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from .const import (
-    SCAN_INTERVAL,
+    SCAN_INT,
     DOMAIN
 )
 
 import logging
 _LOGGER = logging.getLogger(__name__)
 
-SCAN_INTERVAL = SCAN_INTERVAL
+SCAN_INTERVAL = SCAN_INT
 
 async def async_setup_entry(hass,config_entry,async_add_entities):
     """Set up the sensor platform."""
@@ -31,6 +26,7 @@ async def async_setup_entry(hass,config_entry,async_add_entities):
     )
 
 class InfiniteStudentSensor(SensorEntity):
+    """Infinite Campus Student entity definition"""
     def __init__(
         self,
         hass: HomeAssistant,
@@ -58,6 +54,7 @@ class InfiniteStudentSensor(SensorEntity):
         self._attr_json = await self._hub.poll_students()
 
 class InfiniteCourseSensor(SensorEntity):
+    """Infinite Campus Course entity definition"""
     def __init__(
         self,
         hass: HomeAssistant,
@@ -85,6 +82,7 @@ class InfiniteCourseSensor(SensorEntity):
         self._attr_json = await self._hub.poll_courses()
 
 class InfiniteAssignmentSensor(SensorEntity):
+    """Infinite Campus Assignment entity definition"""
     def __init__(
         self,
         hass: HomeAssistant,

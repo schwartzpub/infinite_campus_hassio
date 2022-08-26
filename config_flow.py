@@ -19,7 +19,6 @@ from .const import (
     DOMAIN,
     VERSION
 )
-from .infinitehub import InfiniteHub
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,7 +47,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
                         CONF_USERNAME: data[CONF_USERNAME], 
                         CONF_SECRET: data[CONF_SECRET]
                     }
-                elif response.status != 200:
+                if response.status != 200:
                     raise CannotConnect
                 else:
                     raise InvalidAuth
@@ -59,7 +58,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = VERSION
 
-    async def async_step_user(self, user_input: None):
+    async def async_step_user(self, user_input: None): # pylint: disable=signature-differs
         """Handle the initial step."""
         if user_input is None:
             return self.async_show_form(

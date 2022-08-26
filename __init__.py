@@ -2,16 +2,11 @@
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 import logging
 from .infinitehub import InfiniteHub
 from .const import (
-    CONF_BASEURI,
-    CONF_DISTRICT,
-    CONF_SECRET,
-    CONF_USERNAME,
     HA_SENSOR,
     DOMAIN
 )
@@ -19,6 +14,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 def setup (hass, config):
+    """Setup"""
     return True
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

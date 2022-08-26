@@ -1,13 +1,14 @@
+"""Infinite Campus Hub"""
 from __future__ import annotations
 
 import logging
 import aiohttp
 
-from typing import Any, Dict
+from typing import Any
 from datetime import datetime, date
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
     CONF_USERNAME,
@@ -20,7 +21,8 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
+class InfiniteHub(DataUpdateCoordinator[dict[str, Any]]):
+    """Infinite Campus Hub definition"""
     def __init__(
         self,
         hass: HomeAssistant
@@ -42,10 +44,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
         """Test if we can authenticate with the district."""
         async with session.post('{0}/campus/verify.jsp?nonBrowser=true&username={1}&password={2}&appName={3}&portalLoginPage={4}'.format(self._baseuri,self._username,self._secret,self._district,'parents')) as authresponse:
             response = authresponse
-            if response.status == 200 and "password-error" not in await response.text():
-                return True
-            else:
-                return False
+            return bool(response.status == 200 and "password-error" not in await response.text())
 
     async def poll_students(self) -> str:
         """Get Students Data"""
@@ -56,13 +55,14 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                 async with session.get('{0}/campus/api/portal/students'.format(self._baseuri)) as studentresp:
                     studentresponse = await studentresp.json()
                     for student in studentresponse:
-                        student["scheduleDays"] = await self.poll_scheduleDays(student["enrollments"][0]["calendarID"]) if len(student["enrollments"]) > 0 else ""
+                        student["scheduleDays"] = await self.poll_scheduledays(student["enrollments"][0]["calendarID"]) if len(student["enrollments"]) > 0 else ""
                         students.append(student)
                     return students
             else:
                 return False
 
     async def poll_term(self) -> str:
+        """Get Terms"""
         async with aiohttp.ClientSession() as session:
             authenticated = await self.authenticate(session)
             if authenticated:
@@ -71,22 +71,23 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                     today = date.today().strftime("%Y-%m-%d")
 
                     for term in terms:
-                        _LOGGER.warning(term)
-                        if term["startDate"] <= today and term["endDate"] >= today:
-                            
+                        #_LOGGER.warning(term)
+                        if term["startDate"] <= today <= term["endDate"]:
                             return term["termID"]
 
                     return False
 
-    async def poll_scheduleDays(self,calendarID) -> str:
+    async def poll_scheduledays(self,calendarid) -> str:
+        """Get Schedule Days"""
         async with aiohttp.ClientSession() as session:
             authenticated = await self.authenticate(session)
             if authenticated:
-                async with session.get('{0}/campus/resources/calendar/instructionalDay?calendarID={1}'.format(self._baseuri,calendarID)) as dayresp:
+                async with session.get('{0}/campus/resources/calendar/instructionalDay?calendarID={1}'.format(self._baseuri,calendarid)) as dayresp:
                     daysresponse = await dayresp.json()
         return daysresponse
 
     async def poll_courses(self) -> str:
+        """Get Courses"""
         term = await self.poll_term()
         courses = []
         async with aiohttp.ClientSession() as session:
@@ -105,6 +106,7 @@ class InfiniteHub(DataUpdateCoordinator[Dict[str, Any]]):
                 return courses
 
     async def poll_assignments(self) -> str:
+        """Get Assignments"""
         term = await self.poll_term()
         assignments = []
         async with aiohttp.ClientSession() as session:
