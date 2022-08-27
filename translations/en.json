@@ -12,7 +12,6 @@
             "user": {
                 "data": {
                     "url": "Base URI",
-                    "location": "District",
                     "password": "Password",
                     "username": "Username"
                 }
