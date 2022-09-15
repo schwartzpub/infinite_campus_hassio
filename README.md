@@ -18,7 +18,7 @@ To install this integration, clone the repository into your Home Assistant custo
 [core-ssh ~]$ cd config/custom_components/
 [core-ssh ~]$ mkdir infinitecampus
 [core-ssh ~]$ cd infinitecampus
-[core-ssh ~]$ git clone git@github.com:schwartzpub/infinite_campus_hassio .
+[core-ssh ~]$ git clone https://github.com/gdgeist/infinite_campus_hassio.git
 ```
 
 In Home Assistant, navigate to Settings > Devices & Services and click + Add Integration
