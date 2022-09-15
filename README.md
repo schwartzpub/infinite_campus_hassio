@@ -17,13 +17,13 @@ To install this integration, clone the repository into your Home Assistant custo
 ```bash
 [core-ssh ~]$ cd config/custom_components/
 [core-ssh ~]$ mkdir infinitecampus
-[core-ssh ~]$ cd canvas
+[core-ssh ~]$ cd infinitecampus
 [core-ssh ~]$ git clone git@github.com:schwartzpub/infinite_campus_hassio .
 ```
 
 In Home Assistant, navigate to Settings > Devices & Services and click + Add Integration
 
-Select the Canvas integration.
+Select the Infinite Campus integration.
 
 Enter the following information:
  - Base URL (https://<yourdistrict>.infinitecampus.com)
