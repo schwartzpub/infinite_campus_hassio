@@ -26,7 +26,7 @@ In Home Assistant, navigate to Settings > Devices & Services and click + Add Int
 Select the Infinite Campus integration.
 
 Enter the following information:
- - Base URL (https://<yourdistrict>.infinitecampus.com)
+ - Base URL (https://'<your_districts_server>'.infinitecampus.com)  substitute the full domain name that shows in your browsers url field to the .com and no more
  - District  - at the login page past the search for your district you can inspect the page and find the appName as shown in the screenshot - this is your District
  - Username
  - Password
