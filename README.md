@@ -27,7 +27,7 @@ Select the Infinite Campus integration.
 
 Enter the following information:
  - Base URL (https://<yourdistrict>.infinitecampus.com)
- - District  - at the login page past the search for your district you can inspect the page and find the app-name as shown in the screenshot
+ - District  - at the login page past the search for your district you can inspect the page and find the appName as shown in the screenshot - this is your District
  - Username
  - Password
  
