@@ -27,6 +27,7 @@ Select the Infinite Campus integration.
 
 Enter the following information:
  - Base URL (https://<yourdistrict>.infinitecampus.com)
- - District 
+ - District  - login to Infinite Campus online and look fdo
  - Username
  - Password
+![Screenshot 2022-09-16 171957](https://user-images.githubusercontent.com/13734613/190816004-a062b221-0653-4655-9b37-b67211350e6b.jpg)
