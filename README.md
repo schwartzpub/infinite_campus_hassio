@@ -1,5 +1,5 @@
 # Infinite Campus Custom Integration
-This is custom Home Assistant Integration for [Infinite Campus](https://www.infinitecampus.com/) from Instructure.  
+This is custom Home Assistant Integration for [Infinite Campus](https://www.infinitecampus.com/).  
 
 This integration will create several sensor entities for different objects retrieved from [Infinite Campus](https://www.infinitecampus.com) using the [Infinite Campus Parent API](https://github.com/schwartzpub/ic_parent_api) python module.
 
