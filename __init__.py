@@ -25,7 +25,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # _LOGGER.warning("-------SETTING UP PLATFORMS--------")
 
-    hass.config_entries.async_setup_platforms(entry, HA_SENSOR)
+    await hass.config_entries.async_forward_entry_setups(entry, HA_SENSOR)
 
     # _LOGGER.warning("-------COMPLETED SETTING UP PLATFORMS---------")
     return True
