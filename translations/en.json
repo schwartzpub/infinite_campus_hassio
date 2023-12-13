@@ -11,7 +11,8 @@
         "step": {
             "user": {
                 "data": {
-                    "url": "Base URI",
+                    "baseuri": "Base URI",
+                    "district": "District or appName",
                     "password": "Password",
                     "username": "Username"
                 }
