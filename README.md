@@ -19,7 +19,7 @@ As a pre-requisite please install
 
 1. Python3.x
 2. PIP
-3. The PIP wheel from here https://github.com/schwartzpub/ic_parent_api
+3. The PIP wheel from here <https://github.com/schwartzpub/ic_parent_api>
 
 To install this integration, clone the repository into your Home Assistant custom_components directory:
 
