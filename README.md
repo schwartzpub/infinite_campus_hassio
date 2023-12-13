@@ -23,12 +23,12 @@ As a pre-requisite please install
 
 To install this integration, clone the repository into your Home Assistant custom_components directory:
 
-```bash
-[core-ssh ~]$ cd config/custom_components/
-[core-ssh ~]$ mkdir infinitecampus
-[core-ssh ~]$ cd infinitecampus
-[core-ssh ~]$ git clone https://github.com/schwartzpub/infinite_campus_hassio.git
+```shell
+cd config/custom_components/
+git clone https://github.com/schwartzpub/infinite_campus_hassio.git infinitecampus
 ```
+
+Restart Home Assistant **NOT Quick Reload**
 
 In Home Assistant, navigate to Settings > Devices & Services and click + Add Integration
 
