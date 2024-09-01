@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://github.com/schwartzpub/infinite_campus_hassio",
   "issue_tracker": "https://github.com/schwartzpub/infinite_campus_hassio/issues",
-  "requirements": ["ic_parent_api==0.0.13"],
+  "requirements": ["ic_parent_api==0.0.14"],
   "codeowners": ["@schwartzpub"],
   "iot_class": "local_polling",
   "version": "0.0.6"
