@@ -57,7 +57,25 @@ SENSORS: tuple[InfiniteCampusEntityDescription, ...] = (
         name="Infinite Campus Terms",
         unique_id="ic_term",
         value_fn=lambda canvas: canvas.poll_terms()
-    )
+    ),
+    InfiniteCampusEntityDescription(
+        key="grade",
+        name="Infinite Campus Grades",
+        unique_id="ic_grade",
+        value_fn=lambda canvas: canvas.poll_grades()
+    ),
+    InfiniteCampusEntityDescription(
+        key="attendance",
+        name="Infinite Campus Attendance",
+        unique_id="ic_attendance",
+        value_fn=lambda canvas: canvas.poll_attendance()
+    ),
+    InfiniteCampusEntityDescription(
+        key="message",
+        name="Infinite Campus Messages",
+        unique_id="ic_message",
+        value_fn=lambda canvas: canvas.poll_messages()
+    ),
 )
 async def async_setup_entry(
     hass: HomeAssistant, 
@@ -91,7 +109,15 @@ class InfiniteCampusSensor(SensorEntity):
     @property
     def extra_state_attributes(self):
         """Add extra attribute."""
-        return {f"{self._entity_description.key}": [x.as_dict() for x in self._attr_infinite_campus_data]}
+        data = []
+        for x in self._attr_infinite_campus_data:
+            if hasattr(x, 'as_dict'):
+                data.append(x.as_dict())
+            elif isinstance(x, dict):
+                data.append(x)
+            else:
+                data.append(str(x))
+        return {f"{self._entity_description.key}": data}
 
     async def async_update(self) -> None:
         """Fetch new state data for the sensor.
