@@ -4,11 +4,14 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from ic_parent_api import InfiniteCampus
-from ic_parent_api.models.assignment import Assignment
-from ic_parent_api.models.course import Course
-from ic_parent_api.models.student import Student
-from ic_parent_api.models.term import Term
+from .ic_parent_api import InfiniteCampus
+from .ic_parent_api.models.assignment import Assignment
+from .ic_parent_api.models.course import Course
+from .ic_parent_api.models.student import Student
+from .ic_parent_api.models.term import Term
+from .ic_parent_api.models.grade import Grade
+from .ic_parent_api.models.attendance import Attendance
+from .ic_parent_api.models.message import Message
 
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
@@ -31,7 +34,7 @@ class InfiniteHub(DataUpdateCoordinator[dict[str, Any]]):
 
     config_entry: config_entries.ConfigEntry
 
-    def __init__(self, hass: HomeAssistant) -> None:
+    def __init__(self, hass: HomeAssistant, entry: config_entries.ConfigEntry) -> None:
         """Initialize."""
         super().__init__(
             hass,
@@ -39,6 +42,7 @@ class InfiniteHub(DataUpdateCoordinator[dict[str, Any]]):
             name=DOMAIN,
             update_interval=SCAN_INT,
         )
+        self.config_entry = entry
 
         self._baseuri = self.config_entry.data[CONF_BASEURI]
         self._username = self.config_entry.data[CONF_USERNAME]
@@ -84,3 +88,62 @@ class InfiniteHub(DataUpdateCoordinator[dict[str, Any]]):
                 ]
             )
         return assignments
+
+    async def poll_grades(self) -> list[dict]:
+        """Get Grades for all students."""
+        grades_data: list[dict] = []
+        students = await self.poll_students()
+        for student in students:
+            gradesresp = await self._client.grades(student.personid)
+            for grade in gradesresp:
+                for term in grade.terms:
+                    for course in term.courses:
+                        grades_data.append({
+                            "student_name": f"{student.firstname} {student.lastname}",
+                            "student_id": student.personid,
+                            "term_name": term.termname,
+                            "course_name": course.coursename,
+                            "grade": course.grade,
+                            "teacher": course.teacherdisplay,
+                        })
+        return grades_data
+
+    async def poll_attendance(self) -> list[dict]:
+        """Get Attendance for all students."""
+        attendance_data: list[dict] = []
+        students = await self.poll_students()
+        for student in students:
+            for enrollment in student.enrollments:
+                attendanceresp = await self._client.attendance(
+                    enrollment.enrollmentid, student.personid
+                )
+                for term in attendanceresp.terms:
+                    attendance_data.append({
+                        "student_name": f"{student.firstname} {student.lastname}",
+                        "student_id": student.personid,
+                        "term_name": term.termname,
+                        "total_absent": term.totalabsent,
+                        "total_tardy": term.totaltardy,
+                    })
+        return attendance_data
+
+    async def poll_messages(self) -> list[dict]:
+        """Get Inbox Messages with full content."""
+        messages_data: list[dict] = []
+        messages = await self._client.messages()
+        for msg in messages:
+            # Fetch full message details including body
+            detail = await self._client.message_detail(msg)
+            messages_data.append({
+                "messageid": msg.messageid,
+                "subject": msg.subject,
+                "date": msg.date,
+                "sender": msg.sender,
+                "studentname": msg.studentname,
+                "coursename": msg.coursename,
+                "actionrequired": msg.actionrequired,
+                "newmessage": msg.newmessage,
+                "duedate": msg.duedate,
+                "body": detail.body_text if detail else None,
+            })
+        return messages_data

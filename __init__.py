@@ -21,7 +21,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up infinitecampus from a config entry."""
 
     hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.entry_id] = InfiniteHub(hass)
+    hass.data[DOMAIN][entry.entry_id] = InfiniteHub(hass, entry)
 
     # _LOGGER.warning("-------SETTING UP PLATFORMS--------")
 
